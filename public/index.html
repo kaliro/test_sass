@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuristic SaaS Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0E1117;
+            color: #fff;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 60px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(6px);
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+        .sidebar i {
+            color: #00d1ff;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .sidebar i:hover {
+            transform: scale(1.2);
+            color: #8A2BE2;
+        }
+        main {
+            margin-left: 80px;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill,minmax(320px,1fr));
+            grid-gap: 30px;
+        }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(8px);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.4);
+        }
+        h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: #00d1ff;
+        }
+        .subtitle {
+            font-size: 14px;
+            color: #8A2BE2;
+            margin-bottom: 20px;
+        }
+        canvas {
+            width: 100% !important;
+            height: 260px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <i class="icon-overview">O</i>
+        <i class="icon-revenue">R</i>
+        <i class="icon-customers">C</i>
+        <i class="icon-forecast">F</i>
+    </div>
+    <main>
+        <div class="card">
+            <h2>Overview</h2>
+            <div class="subtitle">MRR, Users, Churn</div>
+            <canvas id="overviewChart"></canvas>
+        </div>
+        <div class="card">
+            <h2>Revenue Breakdown</h2>
+            <div class="subtitle">Plans, Locations, Sources</div>
+            <canvas id="revenueChart"></canvas>
+        </div>
+        <div class="card">
+            <h2>Customer Insights</h2>
+            <div class="subtitle">Cohorts, LTV, Retention</div>
+            <canvas id="customerChart"></canvas>
+        </div>
+        <div class="card">
+            <h2>Forecasting</h2>
+            <div class="subtitle">Growth curves, risk alerts</div>
+            <canvas id="forecastChart"></canvas>
+        </div>
+    </main>
+    <script>
+        // Bar chart for overview
+        new Chart(document.getElementById('overviewChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                datasets: [{
+                    label: 'MRR',
+                    backgroundColor: '#00FFB3',
+                    data: [12, 19, 3, 5, 2]
+                }]
+            },
+            options: {
+                animation: {
+                    duration: 1000,
+                    easing: 'easeOutQuart'
+                },
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // Pie chart for revenue breakdown
+        new Chart(document.getElementById('revenueChart'), {
+            type: 'pie',
+            data: {
+                labels: ['Plan A', 'Plan B', 'Plan C'],
+                datasets: [{
+                    data: [30, 50, 20],
+                    backgroundColor: ['#00d1ff', '#8A2BE2', '#00FFB3']
+                }]
+            },
+            options: {
+                animation: {
+                    duration: 1200,
+                    easing: 'easeOutQuint'
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // Line chart for customer insights
+        new Chart(document.getElementById('customerChart'), {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [{
+                    label: 'Active Users',
+                    borderColor: '#8A2BE2',
+                    backgroundColor: 'rgba(138,43,226,0.2)',
+                    data: [50, 60, 70, 90],
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                animation: {
+                    duration: 1500,
+                    easing: 'easeOutSine'
+                },
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // Line chart for forecasting with gradient
+        const ctx = document.getElementById('forecastChart').getContext('2d');
+        const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+        gradient.addColorStop(0, '#00d1ff');
+        gradient.addColorStop(1, 'rgba(0,209,255,0)');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                datasets: [{
+                    label: 'Growth Rate',
+                    borderColor: '#00d1ff',
+                    backgroundColor: gradient,
+                    data: [5, 15, 25, 40],
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                animation: {
+                    duration: 1500,
+                    easing: 'easeOutCubic'
+                },
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
