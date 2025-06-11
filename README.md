@@ -10,6 +10,13 @@ This example showcases a concept dashboard inspired by Baremetrics and Apple Vis
 - **Minimal sidebar** using icon placeholders.
 - **Typography** via [Space Grotesk](https://fonts.google.com/specimen/Space+Grotesk) for a modern look.
 
+## Key Sections
+
+- **Overview** &mdash; bar/line chart mixing MRR, active users, and churn.
+- **Revenue Breakdown** &mdash; pie chart illustrating plan or regional revenue.
+- **Customer Insights** &mdash; line chart plotting ARPU and LTV trends alongside active users.
+- **Forecasting** &mdash; projected growth curves with risk alert markers.
+
 ## Running locally
 
 1. Install dependencies:
